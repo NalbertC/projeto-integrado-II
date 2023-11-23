@@ -15,8 +15,9 @@ export function ensureAuthenticated(
   const [, token] = authToken.split(" ");
 
   try {
-    verify(token, authConfig.secret);
+    verify(token, authConfig.secret!);
     const { sub } = decode(token);
+
     req.userId = sub.toString();
 
     return next();
