@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import fs from "fs";
+import path from "path";
 import { z } from "zod";
 import { prisma } from "../models";
 import { encriptPassword } from "../services/auth";
@@ -21,6 +23,8 @@ export default {
       email: z.string(),
       password: z.string(),
     });
+
+    const diretorioDeArquivos = "/mnt/teste";
 
     const { name, username, email, password } = creteUserRequestBody.parse(
       req.body
@@ -48,6 +52,18 @@ export default {
       }
 
       const encriptedPass = await encriptPassword(password);
+
+      const filePath = path.join(diretorioDeArquivos, username);
+
+      fs.mkdir(filePath, (err) => {
+        if (err) {
+          console.error("Erro ao criar a pasta:", err);
+          return res.status(500).json("Erro interno no servidor");
+        } else {
+          console.log("Pasta criada com sucesso.");
+          return res.status(201).json("Pasta criada com sucesso");
+        }
+      });
 
       const newUser = await prisma.user.create({
         data: {
@@ -78,8 +94,8 @@ export default {
           id: userId,
         },
         include: {
-          files: true
-        }
+          files: true,
+        },
       });
       if (!user) {
         return res.status(404).json("User does not exists");

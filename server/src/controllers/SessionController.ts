@@ -38,9 +38,8 @@ export default {
       }
 
       // gerar token do usuario
-
       const token = sign({}, authConfig.secret!, {
-        subject: String(userAlreadExists.id),
+        subject: userAlreadExists.id,
         expiresIn: authConfig.expiresIn,
       });
 
@@ -48,7 +47,7 @@ export default {
         user: {
           id: userAlreadExists.id,
           name: userAlreadExists.name,
-          username: userAlreadExists.username
+          username: userAlreadExists.username,
         },
         token,
       });
@@ -143,6 +142,8 @@ export default {
         },
         data: {
           password: encriptedPass,
+          tokenResetPass: null,
+          dateExpirationToken: null,
         },
       });
 
