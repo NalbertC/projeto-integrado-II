@@ -50,7 +50,7 @@ export default {
           userId: userExists.id,
           name: originalname!,
           key: key!,
-          url: url!
+          url: url!,
         },
       });
 
