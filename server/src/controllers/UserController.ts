@@ -106,15 +106,20 @@ export default {
     }
   },
 
-  async update(req: Request, res: Response){
-    try {
+  async update(req: Request, res: Response) {
+    const updateUserRequestBody = z.object({
+      name: z.string(),
+      username: z.string(),
+      email: z.string(),
+    });
 
+    const {} = updateUserRequestBody.parse(req.body)
+
+    try {
       return res.status(200).json();
     } catch (error) {
       console.error(error);
-      return res.status(500).json('Internal server error');
+      return res.status(500).json("Internal server error");
     }
-  }
-
-
+  },
 };

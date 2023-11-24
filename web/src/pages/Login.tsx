@@ -11,27 +11,71 @@ export function Login({ }: LoginProps) {
 
   const { authenticated, login } = useAuth()
 
-
-
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault()
 
-    const {data} = await login(email, password);
+    if (email === "" || password === "") {
+      setInfoLogin("Todos os campos devem ser preenchidos")
+      return
+    }
+
+    const { data } = await login(email, password);
 
     setInfoLogin(data)
   }
 
   return (
-    <div className="h-screen w-full flex flex-col justify-center items-center">
+    <div className="h-screen w-full flex flex-row gap-6 justify-around items-center bg-gradient-to-b from-indigo-500 to-white px-6">
+      <aside className="flex flex-col gap-8">
+        <h1 className="text-black text-[58px] font-bold">Bem vindo(a) ao <br />LocalDrive</h1>
 
-      <form className=" flex flex-col gap-2 bg-slate-100 p-4 rounded-lg" onSubmit={handleSubmit}>
-        <p className="">Login</p>
-        <input type="email" placeholder="email" value={email} onChange={e => setEmail(e.target.value)} />
-        <input type="password" placeholder="senha" value={password} onChange={e => setPassword(e.target.value)} />
+        <p className="text-[32px]">Seu local de armazenamento on-line!</p>
 
-        <p>{infoLogin}</p>
+        <div className="flex flex-row gap-4 items-center">
 
-        <button className="bg-blue-500 h-10 rounded-lg">Entrar</button>
+          <span>Ainda não possui cadastro?</span>
+
+          <button className="w-56 h-[62px] bg-cyan-400 rounded-full shadow border border-white text-xl font-bold">
+            Cadastre-se
+          </button>
+
+        </div>
+
+
+      </aside>
+
+      <form className=" flex flex-col bg-slate-100 py-9 px-12 bg-gradient-to-b from-cyan-400 to-cyan-400/5 rounded-[32px] shadow border border-green-700" onSubmit={handleSubmit}>
+        <header className="font-bold flex justify-center text-[32px] pt-3 pb-6">
+          <p className="">Faça login</p>
+        </header>
+
+        <main className="flex flex-col gap-3">
+          <label htmlFor="email" className="flex flex-col gap-1">
+            <span className="font-semibold text-xl px-4">E-mail</span>
+            <input type="email" id="email"
+              className="h-[52px] px-6 text-base w-96 rounded-full bg-white shadow-inner border border-green-700" placeholder="email" value={email} onChange={e => setEmail(e.target.value)} />
+          </label>
+
+          <label htmlFor="" className="flex flex-col">
+
+
+            <span className="font-semibold text-xl px-4">Senha</span>
+
+            <input type="password" className="h-[52px] px-6 text-base w-96 rounded-full bg-white shadow-inner border border-green-700" placeholder="senha" value={password} onChange={e => setPassword(e.target.value)} />
+
+          </label>
+        </main>
+
+        <span className="h-10 flex items-center justify-center text-red-400">
+
+          <p>{infoLogin}</p>
+        </span>
+
+        <footer className="flex flex-col items-center gap-3">
+          <button type="submit" className=" h-14 rounded-full text-xl font-semibold w-full bg-green-500  border border-white">Entrar</button>
+
+          <a href="" className="underline text-slate-500">Esqueceu a senha?</a>
+        </footer>
       </form>
     </div>
   )

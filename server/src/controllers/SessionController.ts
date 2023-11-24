@@ -25,7 +25,7 @@ export default {
 
       // verificar se usuario existe
       if (!userAlreadExists) {
-        return res.status(400).json("User or password incorrect");
+        return res.status(400).json("Email ou senha incorretos");
       }
       // verificar se a senha esta correta
       const verifyPassword = await comparePassword(
@@ -34,7 +34,7 @@ export default {
       );
 
       if (!verifyPassword) {
-        return res.status(400).json("User or password incorrect");
+        return res.status(400).json("Email ou senha incorretos");
       }
 
       // gerar token do usuario
@@ -53,7 +53,7 @@ export default {
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json("Internal server error");
+      return res.status(500).json("Erro interno no servidor");
     }
   },
 
