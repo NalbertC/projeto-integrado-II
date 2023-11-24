@@ -17,8 +17,10 @@ export default {
   async create(req: Request, res: Response) {
     try {
       const createPostReqFile = z.object({
-        originalname: z.string().optional(),
-        key: z.string().optional(),
+        originalname: z.string(),
+        key: z.string(),
+        size: z.number(),
+        path: z.string()
       });
 
       const userAutenticated = z.object({
@@ -37,20 +39,17 @@ export default {
         return res.status(401).json("User does not exists");
       }
 
-      const { originalname, key } = createPostReqFile.parse(req.file);
+      const { originalname, key , size, path} = createPostReqFile.parse(req.file);
 
-      let url = req.file.location;
-
-      if (!url) {
-        url = `${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/files/${key}`;
-      }
+      console.log(req.file)
 
       const newFile = await prisma.file.create({
         data: {
           userId: userExists.id,
           name: originalname!,
-          key: key!,
-          url: url!,
+          key,
+          size,
+          path
         },
       });
 
@@ -58,6 +57,33 @@ export default {
         req: req.file,
         newFile,
       });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json("Internal server error");
+    }
+  },
+
+  async userFiles(req: Request, res: Response) {
+    const userLoginRequestBody = z.object({
+      userId: z.string(),
+    });
+
+    const { userId } = userLoginRequestBody.parse(req);
+
+    try {
+      const user = await prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+        include: {
+          files: true,
+        },
+      });
+      if (!user) {
+        return res.status(404).json("User does not exists");
+      }
+
+      return res.status(200).json(user.files);
     } catch (error) {
       console.error(error);
       return res.status(500).json("Internal server error");

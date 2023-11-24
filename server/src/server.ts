@@ -21,10 +21,3 @@ server.listen(process.env.SERVER_PORT, () => {
     `Server running in ${process.env.SERVER_HOST}:${process.env.SERVER_PORT}`
   );
 });
-
-
-if(){
-  //sem condições
-  print("Tudo que me dá trabalho, me dá raiva!")
-
-}

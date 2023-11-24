@@ -29,7 +29,8 @@ model File {
   id   String @id @default(uuid())
   name String
   key  String
-  url  String
+  path String
+  size Int
 
   User   User?   @relation(fields: [userId], references: [id])
   userId String?

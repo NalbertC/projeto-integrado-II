@@ -26,4 +26,7 @@ export const storage = multer.diskStorage({
 
 export default {
   storage,
+  limits: {
+    fileSize: 500 * 1024 * 1024,
+  },
 };

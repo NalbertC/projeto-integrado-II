@@ -51,13 +51,14 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       localStorage.setItem("token", token);
       api.defaults.headers.authorization = `Bearer ${token}`;
 
+
       setUser(loggedUser);
       navigate("/");
 
       return response.status;
     } catch (err) {
       if (err instanceof AxiosError) {
-        return err.response?.status;
+        return err.response;
       }
     }
   };
