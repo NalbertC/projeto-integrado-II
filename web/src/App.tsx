@@ -1,5 +1,6 @@
-import { WebRoutes } from "./routers"
 import "./styles/tailwind.css"
+
+import { WebRoutes } from "./routers"
 
 function App() {
 
@@ -9,5 +10,5 @@ function App() {
     <WebRoutes />
   )
 }
-
 export default App
+

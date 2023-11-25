@@ -1,8 +1,10 @@
 import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { AuthContextProvider } from "../contexts/Auth";
 import { useAuth } from "../hooks/useAuth";
+import { Cadastro } from "../pages/Cadastro";
 import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
+import { Upload } from "../pages/Upload";
 
 
 export function WebRoutes() {
@@ -31,7 +33,17 @@ export function WebRoutes() {
             </Private>
           }
           />
+
+          <Route path="/upload" element={
+            <Private>
+              <Upload />
+            </Private>
+          }
+          />
+
+
           <Route path="/login" element={<Login />} />
+          <Route path="/cadastro" element={<Cadastro />} />
         </Routes>
       </AuthContextProvider>
     </Router>

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Input } from "../components/Input";
 import { useAuth } from "../hooks/useAuth";
 
 interface LoginProps {
 }
 
 export function Login({ }: LoginProps) {
+  const navigate = useNavigate()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [infoLogin, setInfoLogin] = useState("");
@@ -32,42 +35,38 @@ export function Login({ }: LoginProps) {
         <p className="text-[32px]">Seu local de armazenamento on-line!</p>
 
         <div className="flex flex-row gap-4 items-center">
-
           <span>Ainda não possui cadastro?</span>
 
-          <button className="w-56 h-[62px] bg-cyan-400 rounded-full shadow border border-white text-xl font-bold">
+          <button className="w-56 h-[62px] bg-cyan-400 rounded-full shadow border border-white text-xl font-bold"
+            onClick={() => navigate("/cadastro")}
+          >
             Cadastre-se
           </button>
-
         </div>
-
-
       </aside>
 
       <form className=" flex flex-col bg-slate-100 py-9 px-12 bg-gradient-to-b from-cyan-400 to-cyan-400/5 rounded-[32px] shadow border border-green-700" onSubmit={handleSubmit}>
-        <header className="font-bold flex justify-center text-[32px] pt-3 pb-6">
+        <header className="font-bold flex justify-center text-[32px] pb-6">
           <p className="">Faça login</p>
         </header>
 
         <main className="flex flex-col gap-3">
           <label htmlFor="email" className="flex flex-col gap-1">
             <span className="font-semibold text-xl px-4">E-mail</span>
-            <input type="email" id="email"
-              className="h-[52px] px-6 text-base w-96 rounded-full bg-white shadow-inner border border-green-700" placeholder="email" value={email} onChange={e => setEmail(e.target.value)} />
+            <Input type="email" id="email"
+              placeholder="email" value={email} onChange={e => setEmail(e.target.value)} />
           </label>
 
           <label htmlFor="" className="flex flex-col">
 
-
             <span className="font-semibold text-xl px-4">Senha</span>
 
-            <input type="password" className="h-[52px] px-6 text-base w-96 rounded-full bg-white shadow-inner border border-green-700" placeholder="senha" value={password} onChange={e => setPassword(e.target.value)} />
+            <Input type="password" placeholder="senha" value={password} onChange={e => setPassword(e.target.value)} />
 
           </label>
         </main>
 
         <span className="h-10 flex items-center justify-center text-red-400">
-
           <p>{infoLogin}</p>
         </span>
 

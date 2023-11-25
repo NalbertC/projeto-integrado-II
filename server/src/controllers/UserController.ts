@@ -38,7 +38,7 @@ export default {
       });
 
       if (verifyUser) {
-        return res.status(400).json("User already exists");
+        return res.status(400).json("Nome de usuario já cadastrado");
       }
 
       const verifyEmail = await prisma.user.findUnique({
@@ -48,7 +48,7 @@ export default {
       });
 
       if (verifyEmail) {
-        return res.status(400).json("email already exists");
+        return res.status(400).json("Email já cadastrado");
       }
 
       const encriptedPass = await encriptPassword(password);
@@ -72,10 +72,10 @@ export default {
         },
       });
 
-      return res.status(201).json({ message: "User created", newUser });
+      return res.status(201).json({ message: "Usuário Cadastrado, faça login e começe a usar", newUser });
     } catch (error) {
       console.error(error);
-      return res.status(500).json("Internal server error");
+      return res.status(500).json("Erro interno no servidor");
     }
   },
 
