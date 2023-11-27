@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import fs from "fs";
+import { promisify } from "util";
 import { z } from "zod";
 import { prisma } from "../models";
 
@@ -14,13 +16,13 @@ export default {
     }
   },
 
-  async create(req: Request, res: Response) {
+  async uploadFile(req: Request, res: Response) {
     try {
       const createPostReqFile = z.object({
         originalname: z.string(),
         key: z.string(),
         size: z.number(),
-        path: z.string()
+        path: z.string(),
       });
 
       const userAutenticated = z.object({
@@ -39,9 +41,22 @@ export default {
         return res.status(401).json("User does not exists");
       }
 
-      const { originalname, key , size, path} = createPostReqFile.parse(req.file);
+      const { originalname, key, size, path } = createPostReqFile.parse(
+        req.file
+      );
 
-      console.log(req.file)
+      const nameExists = await prisma.file.findUnique({
+        where: {
+          name: originalname,
+        },
+      });
+
+      console.log(req.file);
+
+      if (nameExists) {
+        await promisify(fs.unlink)(path);
+        return res.status(401).json("Arquivo com mesmo nome encontrado");
+      }
 
       const newFile = await prisma.file.create({
         data: {
@@ -49,21 +64,18 @@ export default {
           name: originalname!,
           key,
           size,
-          path
+          path,
         },
       });
 
-      return res.status(201).json({
-        req: req.file,
-        newFile,
-      });
+      return res.status(201).json("Arquivo enviado com sucesso!");
     } catch (error) {
       console.error(error);
       return res.status(500).json("Internal server error");
     }
   },
 
-  async userFiles(req: Request, res: Response) {
+  async getUserFiles(req: Request, res: Response) {
     const userLoginRequestBody = z.object({
       userId: z.string(),
     });

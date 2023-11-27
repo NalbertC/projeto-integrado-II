@@ -5,7 +5,7 @@ import { ensureAuthenticated } from "../middlewares/authentication";
 const userRoutes = Router();
 
 userRoutes.get("/", ensureAuthenticated, UserController.index);
-userRoutes.post("/user", UserController.create);
-userRoutes.get("/user",ensureAuthenticated, UserController.user);
+userRoutes.post("/user", UserController.createUser);
+userRoutes.get("/user",ensureAuthenticated, UserController.getUser);
 
 export { userRoutes };

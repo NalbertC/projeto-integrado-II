@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { Input } from "../components/Input";
 import { api } from "../services/api";
 
@@ -12,14 +13,12 @@ export function Cadastro() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
-
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault()
     if (email === "" || name === "" || username === "" || password === "") {
       setInfoLogin("Todos os campos devem ser preenchidos")
       return
     }
-
 
     try {
       console.log({ name, email, username, password })
@@ -35,16 +34,7 @@ export function Cadastro() {
 
       }
     }
-
-
-
-
-
-
-
-
   }
-
 
   return (
     <div className="h-screen w-full flex flex-row gap-6 justify-around items-center bg-gradient-to-b from-indigo-500 to-white px-6">
@@ -67,7 +57,7 @@ export function Cadastro() {
           <p className="">Criar nova conta</p>
         </header>
 
-        <main className="flex flex-col gap-3">
+        <main className="flex flex-col gap-3 w-[384px] ">
           <label htmlFor="email" className="flex flex-col gap-1">
             <span className="font-semibold text-xl px-4">Nome</span>
             <Input type="text" placeholder="Digite seu nome completo" value={name} onChange={e => setName(e.target.value)} />

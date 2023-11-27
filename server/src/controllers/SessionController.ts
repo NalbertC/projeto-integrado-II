@@ -8,7 +8,7 @@ import { comparePassword, encriptPassword } from "../services/auth";
 import mailer from "../services/mail";
 
 export default {
-  async login(req: Request, res: Response) {
+  async authenticateUser(req: Request, res: Response) {
     const userLoginRequestBody = z.object({
       email: z.string(),
       password: z.string(),
@@ -98,7 +98,7 @@ export default {
     }
   },
 
-  async reset(req: Request, res: Response) {
+  async redefinePassword(req: Request, res: Response) {
     const redefinePassBody = z.object({
       email: z.string(),
       password: z.string(),

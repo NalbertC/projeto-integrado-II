@@ -7,12 +7,12 @@ import { ensureAuthenticated } from "../middlewares/authentication";
 const fileRoutes = Router();
 
 fileRoutes.get("/", ensureAuthenticated, FileController.index);
-fileRoutes.get("/user", ensureAuthenticated, FileController.userFiles);
+fileRoutes.get("/user", ensureAuthenticated, FileController.getUserFiles);
 fileRoutes.post(
   "/upload",
   ensureAuthenticated,
   multer(multerConfig).single("file"),
-  FileController.create
+  FileController.uploadFile
 );
 
 

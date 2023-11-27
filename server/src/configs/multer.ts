@@ -12,7 +12,7 @@ export const storage = multer.diskStorage({
 
     cb(null, `/mnt/teste/${verifyUser?.username}`);
   },
-  filename: (req, file: Express.MulterS3.File, callBack: any) => {
+  filename: async (req, file: Express.MulterS3.File, callBack: any) => {
     crypto.randomBytes(16, (err, hash) => {
       if (err) {
         callBack(err);

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { Input } from "../components/Input";
 import { useAuth } from "../hooks/useAuth";
 
@@ -45,12 +46,12 @@ export function Login({ }: LoginProps) {
         </div>
       </aside>
 
-      <form className=" flex flex-col bg-slate-100 py-9 px-12 bg-gradient-to-b from-cyan-400 to-cyan-400/5 rounded-[32px] shadow border border-green-700" onSubmit={handleSubmit}>
+      <form className="flex flex-col bg-slate-100 py-9 px-12 bg-gradient-to-b from-cyan-400 to-cyan-400/5 rounded-[32px] shadow border border-green-700" onSubmit={handleSubmit}>
         <header className="font-bold flex justify-center text-[32px] pb-6">
           <p className="">Faça login</p>
         </header>
 
-        <main className="flex flex-col gap-3">
+        <main className="flex flex-col gap-3 w-[384px] ">
           <label htmlFor="email" className="flex flex-col gap-1">
             <span className="font-semibold text-xl px-4">E-mail</span>
             <Input type="email" id="email"

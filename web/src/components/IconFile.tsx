@@ -10,7 +10,7 @@ export function IconFile({ fileName }: IconFileProps) {
 
   return (
 
-    <div>
+    <div className={`w-[92px] `}>
       <FileIcon extension={extension}  {...defaultStyles[`${extension}`] } />
 
     </div>

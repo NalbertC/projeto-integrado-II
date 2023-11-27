@@ -16,7 +16,7 @@ export default {
     }
   },
 
-  async create(req: Request, res: Response) {
+  async createUser(req: Request, res: Response) {
     const creteUserRequestBody = z.object({
       name: z.string(),
       username: z.string(),
@@ -72,14 +72,19 @@ export default {
         },
       });
 
-      return res.status(201).json({ message: "Usuário Cadastrado, faça login e começe a usar", newUser });
+      return res
+        .status(201)
+        .json({
+          message: "Usuário Cadastrado, faça login e começe a usar",
+          newUser,
+        });
     } catch (error) {
       console.error(error);
       return res.status(500).json("Erro interno no servidor");
     }
   },
 
-  async user(req: Request, res: Response) {
+  async getUser(req: Request, res: Response) {
     const userLoginRequestBody = z.object({
       userId: z.string(),
     });
@@ -106,14 +111,14 @@ export default {
     }
   },
 
-  async update(req: Request, res: Response) {
+  async updateUser(req: Request, res: Response) {
     const updateUserRequestBody = z.object({
       name: z.string(),
       username: z.string(),
       email: z.string(),
     });
 
-    const {} = updateUserRequestBody.parse(req.body)
+    const {} = updateUserRequestBody.parse(req.body);
 
     try {
       return res.status(200).json();
@@ -122,4 +127,6 @@ export default {
       return res.status(500).json("Internal server error");
     }
   },
+
+  async deleteUser(req: Request, res: Response) {},
 };
