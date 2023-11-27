@@ -25,7 +25,7 @@ export default {
       password: z.string(),
     });
 
-    const diretorioDeArquivos = "/mnt/teste";
+    const diretorioDeArquivos = process.env.ROOT_PATH!;
 
     const { name, username, email, password } = creteUserRequestBody.parse(
       req.body
