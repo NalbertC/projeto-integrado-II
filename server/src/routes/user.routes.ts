@@ -6,6 +6,7 @@ const userRoutes = Router();
 
 userRoutes.get("/", ensureAuthenticated, UserController.index);
 userRoutes.post("/user", UserController.createUser);
-userRoutes.get("/user",ensureAuthenticated, UserController.getUser);
+userRoutes.get("/user", ensureAuthenticated, UserController.getUser);
+userRoutes.delete("/user", ensureAuthenticated, UserController.deleteUser);
 
 export { userRoutes };

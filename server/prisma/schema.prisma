@@ -27,7 +27,7 @@ model User {
 
 model File {
   id   String @id @default(uuid())
-  name String @unique
+  name String
   key  String
   path String
   size Int

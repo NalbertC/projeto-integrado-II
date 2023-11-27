@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { CardFile } from "../components/CardFile";
 import { DiskSpaceProgressBar } from "../components/DiskSize";
 import { Header } from "../components/Header";
-import { IconFile } from "../components/IconFile";
-import { useAuth } from "../hooks/useAuth";
+import { Input } from "../components/Input";
 import { api } from "../services/api";
 
 export interface TFile {
@@ -11,13 +11,13 @@ export interface TFile {
   name: string,
   path: string,
   size: number,
-  hover: boolean
 }
-
+// eslint-disable-next-line react-refresh/only-export-components
 export function calcularSomaTamanhos(array: TFile[]) {
   return array.reduce((soma, objeto) => soma + objeto.size, 0);
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function formatarTamanho(bytes: number) {
   const gigabyte = 1024 * 1024 * 1024;
   const megabyte = 1024 * 1024;
@@ -29,21 +29,19 @@ export function formatarTamanho(bytes: number) {
     return (bytes / megabyte).toFixed(2) + ' MB';
   } else if (bytes >= kilobyte) {
     return (bytes / kilobyte).toFixed(2) + ' kB';
-  }  else {
+  } else {
     return bytes + ' bytes';
   }
 }
 
 export function Home() {
-  const { logout } = useAuth()
   const [files, setFiles] = useState<TFile[]>([])
-  const [isHovered, setIsHovered] = useState(false);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     (async () => {
       api.defaults.headers.authorization = `Bearer ${localStorage.getItem("token")}`;
       const { data } = await api.get("/files/user");
-      console.log(data)
 
       setFiles(data);
     })();
@@ -51,48 +49,24 @@ export function Home() {
 
   return (
     <div className="h-screen w-full flex flex-col bg-gradient-to-b from-indigo-500 to-white items-center">
-
       <Header />
 
-      <main className="max-w-6xl w-full flex px-4 ">
+      <div className="w-full h-16 bg-white flex items-center justify-center">
+        <div className="max-w-6xl w-full h-full bg-white flex items-center px-4 justify-between">
+          <Input type="search" value={search} placeholder="Buscar arquivo" onclickSerch={() => alert(search)} onChange={(e) => setSearch(e.target.value)} />
+
+          <DiskSpaceProgressBar usedSpace={calcularSomaTamanhos(files)} files={files} />
+        </div>
+      </div>
+
+      <main className="max-w-6xl w-full flex px-4 mt-4">
 
         <div className="flex justify-stretch flex-wrap gap-2">
           {files.map(file => (
-
-            <div key={file.id} className={`relative hover:bg-slate-500/50 w-[132px] rounded-lg h-[198px] flex flex-col items-center px-2 py-2 gap-2 cursor-pointer ${isHovered ? 'group' : ''}`}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-
-              <div className="w-[116px] h-[116px] rounded-[30px] flex items-center justify-center ">
-
-                <IconFile fileName={file.name} />
-              </div>
-
-
-              <div
-                className={`h-full text-center w-full break-words truncate group-hover:overflow-visible group-hover:text-clip group-hover:whitespace-normal`}
-              >
-                {file.name}
-              </div>
-            </div>
-
+            <CardFile fileName={file.name}/>
           ))}
         </div>
       </main>
-
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-
-
-
-      <DiskSpaceProgressBar usedSpace={calcularSomaTamanhos(files)} files={files} />
-
-
-      <button className="bg-blue-500 h-10 rounded-lg" onClick={logout}>Sair</button>
     </div>
   )
 }

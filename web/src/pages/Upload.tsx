@@ -9,6 +9,7 @@ import documents from "../assets/solar_documents-outline.svg";
 
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../components/Button";
 import { Dropzone } from "../components/Dropzone";
 import { api } from "../services/api";
 
@@ -31,7 +32,7 @@ export function Upload() {
       } catch (error) {
         if (error instanceof AxiosError) {
           console.log(error)
-           alert(error.response?.data)
+          alert(error.response?.data)
         }
       }
       setSelectedFile(undefined)
@@ -56,8 +57,8 @@ export function Upload() {
         </> : <></>}
       </form>
 
-      {selectedFile ? <></> : <><button type="button" className=" h-14 rounded-full text-xl font-semibold px-8 bg-cyan-400 border border-white"
-        onClick={() => navigate("/")} >Voltar par a Home</button></>}
+      {selectedFile ? <></> : <Button type="button"
+        onClick={() => navigate("/")} >Voltar para Home</Button>}
 
       <div className="w-[999px] h-[234px] bg-white rounded-[200px] shadow-inner border border-green-700 flex flex-col items-center justify-evenly font-bold">
 

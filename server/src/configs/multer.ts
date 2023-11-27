@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import "dotenv/config";
 import multer from "multer";
 import { prisma } from "../models";
 
@@ -10,7 +11,7 @@ export const storage = multer.diskStorage({
       },
     });
 
-    cb(null, `/mnt/teste/${verifyUser?.username}`);
+    cb(null, `${process.env.ROOT_PATH}/${verifyUser?.username}`);
   },
   filename: async (req, file: Express.MulterS3.File, callBack: any) => {
     crypto.randomBytes(16, (err, hash) => {

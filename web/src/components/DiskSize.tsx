@@ -16,21 +16,20 @@ export const DiskSpaceProgressBar = ({ usedSpace, files }: DiskSpaceProgressBarP
       const percentage = 100 - (availableSpace / totalSpace) * 100;
       setProgress(percentage);
     })()
-
   }, [usedSpace]);
 
   return (
-    <div className="bg-gray-200 rounded-md p-4 w-full">
-      <div className='border border-blue-400 rounded-lg h-6 w-full flex items-center bg-slate-300'>
-        <div className="h-6 bg-blue-500 rounded-lg" style={{ width: `${progress}%` }} />
+    <div className=" rounded-md px-2 max-w-xs w-full flex flex-col gap-1">
+      <div className={`border rounded-lg h-6 w-full flex items-center bg-slate-300 ${progress >= 90 ? 'border-red-500' : 'border-blue-400'}`}>
+        <div className={`h-6  ${progress >= 90 ? 'bg-red-500 rounded-lg' : 'bg-blue-500 rounded-l-lg'}`} style={{ width: `${progress}%` }} />
       </div>
-      <div className="w-full flex justify-between font-bold">
-
+      <div className="w-full flex justify-between">
         <span>
           {formatarTamanho(calcularSomaTamanhos(files))} usados
         </span>
+
         <span>
-        {formatarTamanho(totalSpace)} disponíveis
+          {formatarTamanho(totalSpace - usedSpace)} livres
         </span>
 
       </div>

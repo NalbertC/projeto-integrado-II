@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { Request, Response } from "express";
 import fs from "fs";
 import path from "path";
@@ -72,12 +73,10 @@ export default {
         },
       });
 
-      return res
-        .status(201)
-        .json({
-          message: "Usuário Cadastrado, faça login e começe a usar",
-          newUser,
-        });
+      return res.status(201).json({
+        message: "Usuário Cadastrado, faça login e começe a usar",
+        newUser,
+      });
     } catch (error) {
       console.error(error);
       return res.status(500).json("Erro interno no servidor");
@@ -117,16 +116,110 @@ export default {
       username: z.string(),
       email: z.string(),
     });
+    const userLoginRequestBody = z.object({
+      userId: z.string(),
+    });
 
-    const {} = updateUserRequestBody.parse(req.body);
+    const { userId } = userLoginRequestBody.parse(req);
+
+    const { email, name, username } = updateUserRequestBody.parse(req.body);
 
     try {
+      const user = await prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      });
+
+      if (!user) {
+        return res.status(404).json("User does not exists");
+      }
+
+      const verifyUser = await prisma.user.findUnique({
+        where: {
+          username,
+        },
+      });
+
+      if (verifyUser) {
+        return res.status(400).json("Nome de usuario já cadastrado");
+      }
+
+      const verifyEmail = await prisma.user.findUnique({
+        where: {
+          email,
+        },
+      });
+
+      if (verifyEmail) {
+        return res.status(400).json("Email já cadastrado");
+      }
+
+      const updateUser = await prisma.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          email,
+          name,
+          username,
+        },
+      });
+
       return res.status(200).json();
+
     } catch (error) {
       console.error(error);
       return res.status(500).json("Internal server error");
     }
   },
 
-  async deleteUser(req: Request, res: Response) {},
+  async deleteUser(req: Request, res: Response) {
+    const userLoginRequestBody = z.object({
+      userId: z.string(),
+    });
+
+    const { userId } = userLoginRequestBody.parse(req);
+
+    const diretorioDeArquivos = process.env.ROOT_PATH!;
+
+    try {
+      const user = await prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      });
+
+      if (!user) {
+        return res.status(404).json("User does not exists");
+      }
+
+      const deleteUser = await prisma.user.delete({
+        where: {
+          id: user.id,
+        },
+        include: {
+          files: true,
+        },
+      });
+
+      const filePath = path.join(diretorioDeArquivos, deleteUser.username);
+
+      if (deleteUser) {
+        fs.rmdir(filePath, { recursive: true }, (err) => {
+          if (err) {
+            console.error("Erro ao excluir a pasta:", err);
+            return res.status(500).json("Erro interno no servidor");
+          } else {
+            console.log("Pasta excluida com sucesso.");
+            return res.status(200).json("Usuário deletado");
+          }
+        });
+      }
+
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json("Internal server error");
+    }
+  },
 };

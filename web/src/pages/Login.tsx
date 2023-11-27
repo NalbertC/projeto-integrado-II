@@ -1,19 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { useAuth } from "../hooks/useAuth";
 
-interface LoginProps {
-}
-
-export function Login({ }: LoginProps) {
+export function Login() {
   const navigate = useNavigate()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [infoLogin, setInfoLogin] = useState("");
 
-  const { authenticated, login } = useAuth()
+  const {  login } = useAuth()
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault()
@@ -38,11 +36,11 @@ export function Login({ }: LoginProps) {
         <div className="flex flex-row gap-4 items-center">
           <span>Ainda não possui cadastro?</span>
 
-          <button className="w-56 h-[62px] bg-cyan-400 rounded-full shadow border border-white text-xl font-bold"
+          <Button
             onClick={() => navigate("/cadastro")}
           >
             Cadastre-se
-          </button>
+          </Button>
         </div>
       </aside>
 

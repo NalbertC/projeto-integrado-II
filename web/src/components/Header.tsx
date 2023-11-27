@@ -1,22 +1,28 @@
-import { FaBars } from "react-icons/fa"
-import { Input } from "./Input"
+import { FaUpload } from "react-icons/fa"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../hooks/useAuth"
+import { Button } from "./Button"
+import { DropdownMenu } from "./DropdownMenu"
 
-interface HeaderProps {
-}
+export function Header() {
 
-export function Header({ }: HeaderProps) {
+  const { user } = useAuth()
+  const navigate = useNavigate()
+
   return (
-    <header className=" w-full h-[78px] bg-white shadow border border-green-700 px-4 flex items-center justify-between" >
+    <header className="w-full h-24 bg-white border-b border-green-700 px-4 flex items-center justify-between" >
+      <h1 className="text-black text-3xl font-bold">LocalDrive</h1>
 
-      <div className="flex items-center">
+      <Button onClick={() => navigate("/upload")}>
+        <span className="font-bold text-lg">
+          Novo upload
+        </span>
+        <FaUpload size={24} />
+      </Button>
 
-        <h1 className="text-black text-3xl font-bold">LocalDrive</h1>
-      </div>
-
-      <div className="flex flex-row items-center gap-6 w-full justify-end">
-
-        <Input type="search" placeholder="Buscar arquivo"/>
-        <FaBars size={24} className="cursor-pointer" />
+      <div className="flex flex-row items-center gap-6">
+        <span className="font-bold text-xl">{user?.name}</span>
+        <DropdownMenu />
       </div>
     </header>
   )
