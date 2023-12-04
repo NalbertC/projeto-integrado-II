@@ -11,7 +11,7 @@ export const storage = multer.diskStorage({
       },
     });
 
-    cb(null, `${process.env.ROOT_PATH}/${verifyUser?.username}`);
+    cb(null, `${process.env.CLIENT_NFS_PATH}/${verifyUser?.username}`);
   },
   filename: async (req, file: Express.MulterS3.File, callBack: any) => {
     crypto.randomBytes(16, (err, hash) => {

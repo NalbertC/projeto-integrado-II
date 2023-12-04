@@ -11,7 +11,6 @@ export const DropdownMenu = () => {
     <Dropdown.Root>
       <Dropdown.Trigger asChild>
         <div className="flex flex-row ">
-
           <FaBars size={32} className="cursor-pointer" />
         </div>
       </Dropdown.Trigger>
@@ -20,10 +19,12 @@ export const DropdownMenu = () => {
         <Dropdown.Content className="bg-white flex flex-col border-green-700 border-2 rounded-xl -right-[24px] absolute min-w-[280px] text-lg py-2">
 
           <Dropdown.Item className="h-11 px-4 flex flex-row items-center cursor-pointer focus:shadow-0 hover:bg-slate-300 focus:outline-0" onClick={() => navigate("/")}>
-            Meu Perfil
+            Início
           </Dropdown.Item>
 
-
+          <Dropdown.Item className="h-11 px-4 flex flex-row items-center cursor-pointer focus:shadow-0 hover:bg-slate-300 focus:outline-0" onClick={() => navigate("/profile")}>
+            Meu Perfil
+          </Dropdown.Item>
 
           <Dropdown.Separator className="h-[1px] bg-green-700 mx-2 my-2" />
 

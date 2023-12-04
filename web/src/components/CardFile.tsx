@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { FaEllipsisH } from "react-icons/fa";
 import { IconFile } from "./IconFile";
+import { OptionsMenu } from "./OptionsMenu";
 
 interface CardFileProps {
   fileName: string
+  fileId: string
 }
 
-export function CardFile({ fileName }: CardFileProps) {
+export function CardFile({ fileName, fileId }: CardFileProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -24,8 +26,12 @@ export function CardFile({ fileName }: CardFileProps) {
         {fileName}
       </div>
 
-      <div className="absolute hidden group-hover:block right-0 pr-2 pt-2 top-0 cursor-pointer">
-        <FaEllipsisH size={20} />
+      <div className="absolute right-0 pr-2 pt-2 top-0 cursor-pointer">
+        <OptionsMenu id={fileId} fileName={fileName}>
+          <div className="w-6 h-4">
+            <FaEllipsisH size={20} className="hidden group-hover:block" />
+          </div>
+        </OptionsMenu>
       </div>
     </div>
   )

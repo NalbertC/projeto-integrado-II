@@ -48,6 +48,7 @@ export default {
           id: userAlreadExists.id,
           name: userAlreadExists.name,
           username: userAlreadExists.username,
+          email: userAlreadExists.email,
         },
         token,
       });

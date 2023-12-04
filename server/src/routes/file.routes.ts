@@ -14,15 +14,16 @@ fileRoutes.post(
   multer(multerConfig).single("file"),
   FileController.uploadFile
 );
-fileRoutes.put(
-  "/file/:fileId",
-  ensureAuthenticated,
-  FileController.updateFile
-);
+fileRoutes.put("/file/:fileId", ensureAuthenticated, FileController.updateFile);
 fileRoutes.delete(
   "/file/:fileId",
   ensureAuthenticated,
   FileController.deleteFile
+);
+fileRoutes.get(
+  "/download/file/:fileId",
+  ensureAuthenticated,
+  FileController.downloadFile
 );
 
 export { fileRoutes };

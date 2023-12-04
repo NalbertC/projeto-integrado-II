@@ -3,6 +3,7 @@ import { CardFile } from "../components/CardFile";
 import { DiskSpaceProgressBar } from "../components/DiskSize";
 import { Header } from "../components/Header";
 import { Input } from "../components/Input";
+import { useAuth } from "../hooks/useAuth";
 import { api } from "../services/api";
 
 export interface TFile {
@@ -35,6 +36,7 @@ export function formatarTamanho(bytes: number) {
 }
 
 export function Home() {
+  const { refreshing } = useAuth()
   const [files, setFiles] = useState<TFile[]>([])
   const [search, setSearch] = useState("");
 
@@ -45,7 +47,7 @@ export function Home() {
 
       setFiles(data);
     })();
-  }, []);
+  }, [refreshing]);
 
   return (
     <div className="h-screen w-full flex flex-col bg-gradient-to-b from-indigo-500 to-white items-center">
@@ -63,7 +65,7 @@ export function Home() {
 
         <div className="flex justify-stretch flex-wrap gap-2">
           {files.map(file => (
-            <CardFile fileName={file.name}/>
+            <CardFile fileName={file.name} fileId={file.id} />
           ))}
         </div>
       </main>

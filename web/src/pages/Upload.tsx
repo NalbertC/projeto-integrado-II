@@ -11,11 +11,14 @@ import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Dropzone } from "../components/Dropzone";
+import { UploadProgress } from "../components/UploadProgress";
 import { api } from "../services/api";
 
 export function Upload() {
   const navigate = useNavigate()
   const [selectedFile, setSelectedFile] = useState<File>();
+  const [progress, setProgress] = useState(0);
+
 
   async function handleSubimit(event: React.FormEvent) {
     event.preventDefault()
@@ -27,11 +30,25 @@ export function Upload() {
 
       try {
         api.defaults.headers.authorization = `Bearer ${localStorage.getItem("token")}`;
-        const response = await api.post("/files/upload", data)
+        const response = await api.post("/files/upload", data, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          onUploadProgress: (progressEvent) => {
+            const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total!);
+            setProgress(percentCompleted);
+          }
+        })
+
+        setProgress(0)
         alert(response.data)
+
+
       } catch (error) {
         if (error instanceof AxiosError) {
           console.log(error)
+          setProgress(0)
+
           alert(error.response?.data)
         }
       }
@@ -44,6 +61,13 @@ export function Upload() {
 
       <form className="bg-white rounded-3xl max-w-[877px] w-full py-14 flex flex-col items-center justify-center gap-6" onSubmit={handleSubimit}>
         <Dropzone onFileUploaded={setSelectedFile} selectedFile={selectedFile} />
+
+        {progress > 0 &&
+          <div className="w-full px-20 flex flex-col items-center font-bold">
+            <UploadProgress progress={progress} />
+            {`${progress}%`}
+          </div>
+        }
 
         {selectedFile ? <>
           <div className="w-full max-w-[710px] flex gap-6">

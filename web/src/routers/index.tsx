@@ -4,12 +4,15 @@ import { useAuth } from "../hooks/useAuth";
 import { Cadastro } from "../pages/Cadastro";
 import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
+import { Profile } from "../pages/Profile";
 import { Upload } from "../pages/Upload";
 
+interface PrivateProps {
+  children: JSX.Element
+}
 
 export function WebRoutes() {
-
-  const Private = (props: any) => {
+  const Private = ({ children }: PrivateProps) => {
     const { loading, user } = useAuth();
 
     if (loading) {
@@ -20,7 +23,7 @@ export function WebRoutes() {
       return <Navigate to="/login" />;
     }
 
-    return props.children;
+    return children;
   };
 
   return (
@@ -37,6 +40,12 @@ export function WebRoutes() {
           <Route path="/upload" element={
             <Private>
               <Upload />
+            </Private>
+          }
+          />
+          <Route path="/profile" element={
+            <Private>
+              <Profile />
             </Private>
           }
           />

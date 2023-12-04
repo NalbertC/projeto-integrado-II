@@ -7,6 +7,7 @@ interface UserProps {
   id: string;
   email: string;
   password: string;
+  username: string
   name: string;
 }
 
@@ -16,6 +17,8 @@ interface AuthContextType {
   loading: boolean;
   login: (username: string, password: string) => Promise<any>;
   logout: () => void;
+  refreshing: boolean
+  setRefreshin: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 interface AuthContextProviderProps {
@@ -28,6 +31,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const navigate = useNavigate()
   const [user, setUser] = useState<UserProps>({} as UserProps);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshin] = useState(true);
 
   useEffect(() => {
     const recoveredUser = localStorage.getItem("user");
@@ -72,6 +76,6 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, authenticated: !!user, loading, login, logout }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, authenticated: !!user, loading, login, logout, refreshing, setRefreshin }}>{children}</AuthContext.Provider>
   )
 }

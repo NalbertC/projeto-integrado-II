@@ -25,7 +25,7 @@ export default {
       password: z.string(),
     });
 
-    const diretorioDeArquivos = process.env.ROOT_PATH!;
+    const diretorioDeArquivos = process.env.CLIENT_NFS_PATH!;
 
     const { name, username, email, password } = creteUserRequestBody.parse(
       req.body
@@ -166,7 +166,7 @@ export default {
         },
       });
 
-      return res.status(200).json();
+      return res.status(200).json("Perfil atualizado com sucesso");
 
     } catch (error) {
       console.error(error);
@@ -181,7 +181,7 @@ export default {
 
     const { userId } = userLoginRequestBody.parse(req);
 
-    const diretorioDeArquivos = process.env.ROOT_PATH!;
+    const diretorioDeArquivos = process.env.CLIENT_NFS_PATH!;
 
     try {
       const user = await prisma.user.findUnique({

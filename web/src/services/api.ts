@@ -1,7 +1,9 @@
 import axios from "axios";
 
+export const baseUrl = "http://localhost:8000";
+
 export const api = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: baseUrl,
 });
 
 export const createSession = async (email: string, password: string) => {

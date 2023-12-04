@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { Request, Response } from "express";
 import fs from "fs";
 import { promisify } from "util";
@@ -150,6 +151,56 @@ export default {
       }
 
       return res.status(200).json("Nome de arquivo válido");
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json("Internal server error");
+    }
+  },
+
+  async downloadFile(req: Request, res: Response) {
+    const userLoginRequestBody = z.object({
+      userId: z.string(),
+    });
+
+    const downloadFileRequestParams = z.object({
+      fileId: z.string(),
+    });
+
+    const { userId } = userLoginRequestBody.parse(req);
+    const { fileId } = downloadFileRequestParams.parse(req.params);
+
+    const diretorioDeArquivos = process.env.CLIENT_NFS_PATH!;
+
+    try {
+      const user = await prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+        include: {
+          files: true,
+        },
+      });
+      if (!user) {
+        return res.status(404).json("User does not exists");
+      }
+
+      const file = await prisma.file.findUnique({
+        where: {
+          id: fileId,
+        },
+      });
+
+      if (!file) {
+        return res.status(404).json("File does not exists");
+      }
+
+      fs.exists(file.path, (exists) => {
+        if (exists) {
+          return res.status(200).download(file.path);
+        } else {
+          return res.status(404).json("Arquivo não encontrado");
+        }
+      });
     } catch (error) {
       console.error(error);
       return res.status(500).json("Internal server error");
