@@ -2,15 +2,12 @@
 
 Atividade avaliativa referente a disciplina de Projeto Integrado II do curso de Sistemas de Informação UFPA entrege dia 05/12/2023.
 
-Documento da aplicação [LocalDrive.pdf](https://github.com/NalbertC/projeto-integrado-II/tree/main/assets/docs).
-
 #### Integrantes da equipe:
 - Edilson de L. Leão - leaoedilson44@gmail.com;
 - Klebson do C. Silva - klebsoncarmo1@gmail.com;
 - Nalberth de L. Castro - nalberthcastro1510@gmail.com;
 - Maick da S. Damasceno - maicksd2017@gmail.com;
 - Wendew M. S. Magalhães - wm.magalhaes@outlook.com;
-
 
 ## Requisitos do Sistema
 
