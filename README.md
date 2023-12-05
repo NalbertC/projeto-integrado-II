@@ -2,7 +2,7 @@
 
 Atividade avaliativa referente a disciplina de Projeto Integrado II do curso de Sistemas de Informação UFPA entrege dia 05/12/2023.
 
-[links]().
+Documento da aplicação [LocalDrive.pdf](./assets/docs/Local%20Drive%20-%20NFS.pdf).
 
 #### Integrantes da equipe:
 - Edilson de L. Leão - leaoedilson44@gmail.com;
@@ -38,15 +38,15 @@ Opções de Recuperação de Acesso | O sistema deverá oferecer opções de rec
 
 ## Diagramas
 #### Diagrama de Caso de Uso
-![Imagem](./assets/Caso%20de%20uso.png)
+![Imagem](./assets/images/Caso%20de%20uso.png)
 
 #### Diagrama de Entidade e Relacionamento
-![Imagem](./assets/entidade-relacionamento.png)
+![Imagem](./assets/images/entidade-relacionamento.png)
 #### Diagrama de Casses
-![Imagem](./assets/dclasses.png)
+![Imagem](./assets/images/dclasses.png)
 
 ## Estrutura do Sistema
-![Imagem](./assets/estrutura.png)
+![Imagem](./assets/images/estrutura.png)
 
 ## Implementação
 #### NFS
@@ -63,16 +63,16 @@ sudo mount 127.17.0.1:/mnt/server_nfs_localDrive /mnt/localDrive | Montar a unid
 
 ## Resultados
 Tela de cadatro.
-![Imagem](./assets/cadastro.png)
+![Imagem](./assets/images/cadastro.png)
 
 Tela de login.
-![Imagem](./assets/login.png)
+![Imagem](./assets/images/login.png)
 
 Tela principal do sistema exibindo dados inseridos salvos no servidor NFS e banco de dados.
-![Imagem](./assets/localdrive-page-home.png)
+![Imagem](./assets/images/localdrive-page-home.png)
 
 Tela de upload de arquivos.
-![Imagem](./assets/upload.png)
+![Imagem](./assets/images/upload.png)
 
 Tela de perfil de usuário.
-![Imagem](./assets/profile.png)
+![Imagem](./assets/images/profile.png)
